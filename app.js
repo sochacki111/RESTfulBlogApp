@@ -9,7 +9,7 @@ const port = 3000;
  */
 
 // Database setup
-mongoose.connect('mongodb://localhost:27017/lkjdsfj', {
+mongoose.connect('mongodb://localhost:27017/restful-blog', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -33,8 +33,41 @@ app.set('view engine', 'ejs');
  * ROUTES GOES HERE
  */
 
+// Show landing page
 app.get('/', (req, res) => {
     res.render('landing');
+});
+
+// List all posts
+app.get('/posts', (req, res) => {
+    res.render('index');
+});
+
+// Show new post form
+app.get('/posts/new', (req, res) => {
+    res.render('new');
+});
+
+app.post('/posts', (req, res) => {
+    res.redirect('posts');
+});
+
+// Show info about one specific post
+app.get('/posts/:id', (req, res) => {
+    res.render('show');
+});
+
+// Show edit form for one post
+app.get('/posts/:id/edit', (req, res) => {
+    res.render('edit');
+});
+
+app.put('/posts/:id', (req, res) => {
+    res.redirect('/posts/:id');
+});
+
+app.delete('/post/:id', (req, res) => {
+    res.redirect('/posts');
 });
 
 // Server listening
