@@ -55,7 +55,24 @@ app.get('/posts/new', (req, res) => {
 });
 
 app.post('/posts', (req, res) => {
-    res.redirect('posts');
+    let name = req.body.name;
+    let description = req.body.description;
+
+    Post.create(
+        {
+            name: name,
+            description: description
+        },
+        (err, post) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Created: \n' + post);
+            }
+        }
+    );
+
+    res.redirect('/posts');
 });
 
 // Show info about one specific post
