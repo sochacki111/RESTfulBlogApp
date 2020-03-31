@@ -1,1 +1,7 @@
 <h1>HELLO FROM index.ejs</h1>
+
+<% posts.forEach(post => { %>
+    <div class="col-md-3 col-sm-6">
+    <h2><%= post.name %> </h2>
+    <p><%= post.description %></p>
+<% }) %>
