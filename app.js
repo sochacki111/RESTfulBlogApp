@@ -77,7 +77,14 @@ app.post('/posts', (req, res) => {
 
 // Show info about one specific post
 app.get('/posts/:id', (req, res) => {
-    res.render('show');
+    let id = req.params.id;
+    Post.findById(id, (err, post) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('show', { post: post });
+        }
+    });
 });
 
 // Show edit form for one post
