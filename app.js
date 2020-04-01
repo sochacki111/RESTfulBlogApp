@@ -17,7 +17,9 @@ mongoose.connect('mongodb://localhost:27017/restful-blog', {
 // Database schema setup
 const blogSchema = new mongoose.Schema({
     title: String,
-    description: String
+    image: String,
+    body: String,
+    created: { type: Date, default: Date.now }
 });
 
 // Database model setup
@@ -59,11 +61,12 @@ app.get('/posts/new', (req, res) => {
 
 app.post('/posts', (req, res) => {
     let title = req.body.title;
+    let image = req.body.image;
     let body = req.body.body;
-
     Post.create(
         {
             title: title,
+            image: image,
             body: body
         },
         (err, post) => {
@@ -97,7 +100,7 @@ app.get('/posts/:id/edit', (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render('edit', { post: post});
+            res.render('edit', { post: post });
         }
     });
 });
