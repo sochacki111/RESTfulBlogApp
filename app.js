@@ -29,6 +29,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // ejs setup
 app.set('view engine', 'ejs');
 
+// Setup for serving custom stylesheets
+app.use(express.static('public'));
+
 /**
  * ROUTES GOES HERE
  */
@@ -89,7 +92,14 @@ app.get('/posts/:id', (req, res) => {
 
 // Show edit form for one post
 app.get('/posts/:id/edit', (req, res) => {
-    res.render('edit');
+    let id = req.params.id;
+    Post.findById(id, (err, post) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('edit', { post: post});
+        }
+    });
 });
 
 app.put('/posts/:id', (req, res) => {
