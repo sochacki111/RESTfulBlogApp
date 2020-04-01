@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/restful-blog', {
 
 // Database schema setup
 const blogSchema = new mongoose.Schema({
-    name: String,
+    title: String,
     description: String
 });
 
@@ -58,13 +58,13 @@ app.get('/posts/new', (req, res) => {
 });
 
 app.post('/posts', (req, res) => {
-    let name = req.body.name;
-    let description = req.body.description;
+    let title = req.body.title;
+    let body = req.body.body;
 
     Post.create(
         {
-            name: name,
-            description: description
+            title: title,
+            body: body
         },
         (err, post) => {
             if (err) {

@@ -1,6 +1,6 @@
 <h1>HELLO FROM index.ejs</h1>
 
 <% posts.forEach(post => { %>
-    <h2><a href="/posts/<%= post._id %>"><%= post.name %></a></h2>
+    <h2><a href="/posts/<%= post._id %>"><%= post.title %></a></h2>
 <% }) %>
 <a href="/posts/new">Create new Post</a>
