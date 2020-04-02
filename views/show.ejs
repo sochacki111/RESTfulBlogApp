@@ -1,23 +1,28 @@
-<%- include('partials/header') %> 
+<%- include('partials/header') %>
 
 <div class="ui main text container segment">
     <div class="ui huge header"><%= post.title %></div>
     <div class="ui top attached">
         <div class="item">
-            <img class="ui centered rounded image" src="<%= post.image %>" alt="post image">
+            <img
+                class="ui centered rounded image"
+                src="<%= post.image %>"
+                alt="post image"
+            />
             <div class="content">
                 <span><%= post.created.toDateString() %> </span>
             </div>
             <div class="description">
                 <p><%= post.body %></p>
             </div>
+            <a class="ui inverted orange button" href="/posts/<%= post._id %>/edit">Edit Post</a>
+            <form class="delete" action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+                <button class="ui inverted red button">Delete</button>
+            </form>
         </div>
     </div>
 </div>
 
-<p><a href="/posts/<%= post._id %>/edit">Edit Post</a>
-<button>Delete Post</button>
-</p>
 <p><a href="/posts">Go back</a></p>
 
-<%- include('partials/footer') %> 
+<%- include('partials/footer') %>

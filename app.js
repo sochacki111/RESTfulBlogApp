@@ -105,8 +105,15 @@ app.put('/posts/:id', (req, res) => {
     });
 });
 
-app.delete('/post/:id', (req, res) => {
-    res.redirect('/posts');
+app.delete('/posts/:id', (req, res) => {
+    // destroy blog
+    Post.findByIdAndRemove(req.params.id, err => {
+        if (err) {
+            res.redirect('/posts');
+        } else {
+            res.redirect('/posts');
+        }
+    });
 });
 
 // Server listening
