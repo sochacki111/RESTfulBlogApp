@@ -1,12 +1,23 @@
-<h1>HELLO FROM show.ejs</h1>
+<%- include('partials/header') %> 
 
-<div>
-    <h2><%= post.title %></a></h2>
-    <img src="<%= post.image %>" alt="post image">
-    <p><%= post.body %></p>
+<div class="ui main text container segment">
+    <div class="ui huge header"><%= post.title %></div>
+    <div class="ui top attached">
+        <div class="item">
+            <img class="ui centered rounded image" src="<%= post.image %>" alt="post image">
+            <div class="content">
+                <span><%= post.created.toDateString() %> </span>
+            </div>
+            <div class="description">
+                <p><%= post.body %></p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <p><a href="/posts/<%= post._id %>/edit">Edit Post</a>
 <button>Delete Post</button>
 </p>
 <p><a href="/posts">Go back</a></p>
+
+<%- include('partials/footer') %> 

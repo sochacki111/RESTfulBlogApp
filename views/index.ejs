@@ -6,7 +6,8 @@
     <div>
         <h2><a href="/posts/<%= post._id %>"><%= post.title %></a></h2>
         <img src="<%= post.image %>" alt="post image">
-        <span><%= post.created %></span>    
+        <span><%= post.created %></span>
+        <p><%= post.body.substring(0, 100) %>...</p>
     </div>
 <% }) %>
 <a href="/posts/new">Create new Post</a>
