@@ -1,3 +1,5 @@
+<%- include('partials/header') %> 
+
 <h1>HELLO FROM index.ejs</h1>
 
 <% posts.forEach(post => { %>
@@ -8,3 +10,5 @@
     </div>
 <% }) %>
 <a href="/posts/new">Create new Post</a>
+
+<%- include('partials/footer') %> 

@@ -60,25 +60,16 @@ app.get('/posts/new', (req, res) => {
 });
 
 app.post('/posts', (req, res) => {
-    let title = req.body.title;
-    let image = req.body.image;
-    let body = req.body.body;
-    Post.create(
-        {
-            title: title,
-            image: image,
-            body: body
-        },
-        (err, post) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log('Created: \n' + post);
-            }
+    // Create post
+    Post.create(req.body.post, (err, post) => {
+        if (err) {
+            res.render('new'); 
+        } else {
+            res.redirect('/posts');
+            console.log('Created: \n' + post);
         }
-    );
-
-    res.redirect('/posts');
+    });
+ 
 });
 
 // Show info about one specific post
