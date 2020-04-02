@@ -1,3 +1,24 @@
-<h1>Edit: <%= post.title %></h1>
+<%- include('partials/header') %>
 
-<a href="/posts/<%= post._id %>">Go back</a>
+<div class="ui main text container segment">
+    <div class="ui hudge header">Edit <%= post.title %> </div>
+    <form class="ui form" action="/posts/<%= post._id %>?_method=PUT" method="POST">
+        <div class="field">
+            <label>Title</label>
+            <input type="text" name="post[title]" value="<%= post.title %>"/>
+        </div>
+        <div class="field">
+            <label>Image</label>
+            <input type="text" name="post[image]" value="<%= post.image %>"/>
+        </div>
+        <div class="field">
+            <label>Post Content</label>
+            <textarea name="post[body]" required cols="30" rows="10"><%= post.body %></textarea>
+        </div>
+        <button class="ui inverted big green button" type="submit">Submit</button>
+    </form>
+</div>
+
+<a href="/posts">Go back</a>
+
+<%- include('partials/footer') %>

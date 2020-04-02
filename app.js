@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const app = express();
 const port = 3000;
 
@@ -14,6 +15,14 @@ mongoose.connect('mongodb://localhost:27017/restful-blog', {
     useUnifiedTopology: true
 });
 
+// ejs setup
+app.set('view engine', 'ejs');
+// body-parser setup
+app.use(bodyParser.urlencoded({ extended: true }));
+// Setup for serving custom stylesheets
+app.use(express.static('public'));
+app.use(methodOverride('_method'));
+
 // Database schema setup
 const blogSchema = new mongoose.Schema({
     title: String,
@@ -24,15 +33,6 @@ const blogSchema = new mongoose.Schema({
 
 // Database model setup
 const Post = mongoose.model('Post', blogSchema);
-
-// body-parser setup
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// ejs setup
-app.set('view engine', 'ejs');
-
-// Setup for serving custom stylesheets
-app.use(express.static('public'));
 
 /**
  * ROUTES GOES HERE
@@ -63,13 +63,12 @@ app.post('/posts', (req, res) => {
     // Create post
     Post.create(req.body.post, (err, post) => {
         if (err) {
-            res.render('new'); 
+            res.render('new');
         } else {
             res.redirect('/posts');
             console.log('Created: \n' + post);
         }
     });
- 
 });
 
 // Show info about one specific post
@@ -89,7 +88,7 @@ app.get('/posts/:id/edit', (req, res) => {
     let id = req.params.id;
     Post.findById(id, (err, post) => {
         if (err) {
-            console.log(err);
+            res.redirect('/posts');
         } else {
             res.render('edit', { post: post });
         }
@@ -97,7 +96,13 @@ app.get('/posts/:id/edit', (req, res) => {
 });
 
 app.put('/posts/:id', (req, res) => {
-    res.redirect('/posts/:id');
+    Post.findByIdAndUpdate(req.params.id, req.body.post, (err, updatedPost) => {
+        if (err) {
+            res.redirect('/posts');
+        } else {
+            res.redirect(`/posts/${req.params.id}`);
+        }
+    });
 });
 
 app.delete('/post/:id', (req, res) => {
