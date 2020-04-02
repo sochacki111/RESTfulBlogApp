@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const expressSanitizer = require('express-sanitizer');
 const app = express();
 const port = 3000;
 
@@ -19,6 +20,7 @@ mongoose.connect('mongodb://localhost:27017/restful-blog', {
 app.set('view engine', 'ejs');
 // body-parser setup
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressSanitizer());
 // Setup for serving custom stylesheets
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
@@ -60,6 +62,8 @@ app.get('/posts/new', (req, res) => {
 });
 
 app.post('/posts', (req, res) => {
+    // Sanitize request
+    req.body.post.body = req.sanitize(req.body.post.body);
     // Create post
     Post.create(req.body.post, (err, post) => {
         if (err) {
@@ -96,6 +100,8 @@ app.get('/posts/:id/edit', (req, res) => {
 });
 
 app.put('/posts/:id', (req, res) => {
+    // Sanitize request
+    req.body.post.body = req.sanitize(req.body.post.body);
     Post.findByIdAndUpdate(req.params.id, req.body.post, (err, updatedPost) => {
         if (err) {
             res.redirect('/posts');
